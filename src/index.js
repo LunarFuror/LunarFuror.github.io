@@ -1,60 +1,48 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-
-class Square extends React.Component {
-  render() {
-    return (
-      <button className="square">
-        {/* TODO */}
-      </button>
+class Die extends React.Component {
+  render(){
+    return(
+      prop.value
     );
   }
 }
-
-class Board extends React.Component {
-  renderSquare(i) {
-    return <Square />;
-  }
-
-  render() {
-    const status = 'Next player: X';
-
-    return (
-      <div>
-        <div className="status">{status}</div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
-    );
-  }
-}
-
 class Game extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        dice: [{value: Math.floor(Math.random() * 6)+1, selected: false}]
+    };
+  }
+
+  addDie() {
+    this.setState({
+      dice: this.state.dice.concat({value: Math.floor(Math.random() * 6)+1, selected: false})
+    });
+  }
+  
+  createTable = () => {
+    let table = []
+
+    // Outer loop to create parent
+    let children = []
+    //Inner loop to create children
+    for (const die of this.state.dice) {
+      children.push(<td><button>{die.value}</button></td>)
+    }
+    //Create the parent and add the children
+    table.push(<tr>{children}</tr>)
+    return table
+  }
+
   render() {
     return (
-      <div className="game">
-        <div className="game-board">
-          <Board />
-        </div>
-        <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
-        </div>
-      </div>
+		<div>
+			<button onClick={()=>this.addDie()}>
+				Add Die
+			</button>
+        <table>
+          {this.createTable()}
+        </table>
+		</div>
     );
   }
 }
@@ -62,6 +50,6 @@ class Game extends React.Component {
 // ========================================
 
 ReactDOM.render(
-  <Game />,
+  <Game/>,
   document.getElementById('root')
 );
