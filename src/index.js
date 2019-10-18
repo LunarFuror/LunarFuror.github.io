@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 ReactDOM.render(
-  <h1>Hello Moto.</h1>,
+  <div className="button-container">
+    <button className="rootButton">Apps</button>
+    <button className="rootButton">Cicada</button>
+  </div>,
   document.getElementById('root')
 );
